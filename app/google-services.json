@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "556192823901-r98cbfeg057qecelg581g5hldgkk6tb8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.ericksprengel.marmitop",
+            "certificate_hash": "8e5691a3933959a5300ff8c964df7b35d4ef720f"
+          }
+        },
+        {
           "client_id": "556192823901-ejvpdg0pcfem69h9aim35o0ilhb40cq5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
