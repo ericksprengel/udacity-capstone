@@ -7,7 +7,15 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import br.com.ericksprengel.mamitop.data.MtopMenuItem;
 import br.com.ericksprengel.marmitop.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,6 +27,10 @@ public class MainActivity extends AppCompatActivity {
 
     MainPagerAdapter mPagerAdapter;
 
+    // Database objects
+    FirebaseDatabase mDatabase;
+    DatabaseReference mMenus;
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -27,6 +39,12 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_menu:
+                    MtopMenuItem menuItem = new MtopMenuItem();
+                    menuItem.setName("Feijoada");
+                    menuItem.setDescription("arroz, feijão e fritas." + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+
+                    Toast.makeText(MainActivity.this, menuItem.getDescription(), Toast.LENGTH_SHORT).show();
+                    mMenus.child(new SimpleDateFormat("yyyy-MM-dd").format(new Date())).push().setValue(menuItem);
                     mViewPager.setCurrentItem(MainPagerAdapter.ITEM_MENU, true);
                     return true;
                 case R.id.navigation_orders:
@@ -45,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        // Database init
+        mDatabase = FirebaseDatabase.getInstance();
+        mMenus = mDatabase.getReference("menus");
 
         mBottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         mPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());

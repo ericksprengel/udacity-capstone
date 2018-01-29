@@ -39,7 +39,10 @@ dependencies {
     implementation 'com.facebook.stetho:stetho:1.5.0'
 
     // Firebase
+    // - Core
     implementation 'com.google.firebase:firebase-core:11.8.0'
+    // - Realtime Database
+    implementation 'com.google.firebase:firebase-database:11.8.0'
 
     // FirebaseUI
     // - for Firebase Realtime Database
