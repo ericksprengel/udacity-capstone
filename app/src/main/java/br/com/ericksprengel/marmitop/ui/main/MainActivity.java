@@ -8,6 +8,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -16,6 +17,9 @@ import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -40,8 +44,11 @@ public class MainActivity extends AppCompatActivity {
     MainPagerAdapter mPagerAdapter;
 
     // Database objects
-    FirebaseDatabase mDatabase;
-    DatabaseReference mMenus;
+    FirebaseDatabase mFirebaseDatabase;
+    DatabaseReference mMenuDatabaseReference;
+    ChildEventListener mChildEventListener;
+
+    private String mUsername;
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -51,12 +58,6 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_menu:
-                    MtopMenuItem menuItem = new MtopMenuItem();
-                    menuItem.setName("Feijoada");
-                    menuItem.setDescription("arroz, feijão e fritas."  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-
-                    Toast.makeText(MainActivity.this, menuItem.getDescription(), Toast.LENGTH_SHORT).show();
-                    mMenus.child(new SimpleDateFormat("yyyy-MM-dd").format(new Date())).push().setValue(menuItem);
                     mViewPager.setCurrentItem(MainPagerAdapter.ITEM_MENU, true);
                     return true;
                 case R.id.navigation_orders:
@@ -77,8 +78,9 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         // Database init
-        mDatabase = FirebaseDatabase.getInstance();
-        mMenus = mDatabase.getReference("menus");
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mFirebaseAuth = FirebaseAuth.getInstance();
+        mMenuDatabaseReference = mFirebaseDatabase.getReference("menus");
 
 
         mBottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -165,6 +167,8 @@ public class MainActivity extends AppCompatActivity {
         if (mAuthStateListener != null) {
             mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
         }
+        //TODO: mMenuAdapter.clear();
+        detachDatabaseReadListener();
     }
 
     private void loadMenu() {
@@ -190,8 +194,9 @@ public class MainActivity extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     loadMenu();
-                    Toast.makeText(MainActivity.this, "You're now signed in. Welcome to FriendlyChat.", Toast.LENGTH_SHORT).show();
+                    onSignedInInitialize(user.getDisplayName());
                 } else {
+                    onSignedOutCleanup();
                     // User is signed out
                     AuthUI.IdpConfig idpConfigPhone = new AuthUI.IdpConfig.PhoneBuilder()
                             .setDefaultCountryIso("br")
@@ -212,7 +217,43 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
+    private void onSignedInInitialize(String username) {
+        mUsername = username;
+        attachDatabaseReadListener();
+        Toast.makeText(MainActivity.this, "You're now signed in. Welcome, " + mUsername, Toast.LENGTH_SHORT).show();
+    }
 
+    private void onSignedOutCleanup() {
+        mUsername = ""; //TODO: remove it.
+        //TODO: mMenuAdapter.clear();
+        detachDatabaseReadListener();
+    }
+
+    private void attachDatabaseReadListener() {
+        if (mChildEventListener == null) {
+            mChildEventListener = new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                    MtopMenuItem mtopMenuItem = dataSnapshot.getValue(MtopMenuItem.class);
+                    Log.e("SPRENGEL", "Novo prato!" + mtopMenuItem.getName());
+                    //TODO: mMenuAdapter.add(friendlyMessage);
+                }
+
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
+                public void onChildRemoved(DataSnapshot dataSnapshot) {}
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+                public void onCancelled(DatabaseError databaseError) {}
+            };
+            mMenuDatabaseReference.addChildEventListener(mChildEventListener);
+        }
+    }
+
+    private void detachDatabaseReadListener() {
+        if (mChildEventListener != null) {
+            mMenuDatabaseReference.removeEventListener(mChildEventListener);
+            mChildEventListener = null;
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -223,29 +264,28 @@ public class MainActivity extends AppCompatActivity {
 
             // Successfully signed in
             if (resultCode == RESULT_OK) {
-                this.startActivity(SignedInActivity.createIntent(this, response));
-                this.finish();
                 return;
+            } else if(resultCode == RESULT_CANCELED) {
+                // Sign in was canceled by the user, finish the activity
+                Toast.makeText(this, "Sign in canceled", Toast.LENGTH_SHORT).show(); //TODO: string
+                finish();
             } else {
-                // Sign in failed
-                if (response == null) {
-                    // User pressed back button
-                    Toast.makeText(this, "TODO(string): Sign in cancelled", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if (response.getErrorCode() == ErrorCodes.NO_NETWORK) {
-                    Toast.makeText(this, "TODO(string): No internet connection", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if (response.getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
-                    Toast.makeText(this, "TODO(string): Unknown error", Toast.LENGTH_LONG).show();
-                    return;
-                }
+                Toast.makeText(this, "Something is wrong.", Toast.LENGTH_SHORT).show(); //TODO: string
+                finish();
             }
-
-            Toast.makeText(this, "TODO(string): unknown_sign_in_response", Toast.LENGTH_LONG).show();
         }
+    }
+
+
+
+
+    //TODO: it's just for tests
+    private void createMtopMenuItem() {
+        MtopMenuItem menuItem = new MtopMenuItem();
+        menuItem.setName("Feijoada");
+        menuItem.setDescription("arroz, feijão e fritas." +  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+
+        Toast.makeText(MainActivity.this, menuItem.getDescription(), Toast.LENGTH_SHORT).show();
+        mMenuDatabaseReference.child(new SimpleDateFormat("yyyy-MM-dd").format(new Date())).push().setValue(menuItem);
     }
 }
