@@ -1,4 +1,4 @@
-package br.com.ericksprengel.mamitop.data;
+package br.com.ericksprengel.marmitop.data;
 
 import java.util.List;
 

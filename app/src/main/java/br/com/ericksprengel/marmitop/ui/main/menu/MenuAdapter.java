@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.ericksprengel.mamitop.data.MtopMenuItem;
+import br.com.ericksprengel.marmitop.data.MtopMenuItem;
 import br.com.ericksprengel.marmitop.R;
 
 public class MenuAdapter  extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {

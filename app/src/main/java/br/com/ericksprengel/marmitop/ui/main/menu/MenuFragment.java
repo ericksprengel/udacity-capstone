@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -22,13 +20,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 
-import br.com.ericksprengel.mamitop.data.MtopMenuItem;
-import br.com.ericksprengel.marmitop.BuildConfig;
+import br.com.ericksprengel.marmitop.data.MtopMenuItem;
 import br.com.ericksprengel.marmitop.R;
-import br.com.ericksprengel.marmitop.ui.main.MainActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
