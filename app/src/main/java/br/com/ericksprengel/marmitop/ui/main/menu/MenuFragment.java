@@ -24,6 +24,7 @@ import java.util.Date;
 
 import br.com.ericksprengel.marmitop.data.MtopMenuItem;
 import br.com.ericksprengel.marmitop.R;
+import br.com.ericksprengel.marmitop.ui.addtoorder.AddToOrderActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -94,6 +95,7 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnMtopMenuItem
     @Override
     public void onMtopMenuItemClick(MtopMenuItem mtopMenuItemtem) {
         Toast.makeText(getContext(), "Fazer adicionar ao pedido!\n" + mtopMenuItemtem.getName(), Toast.LENGTH_SHORT).show();
+        startActivity(AddToOrderActivity.getStartIntent(getContext()));
     }
 
 
