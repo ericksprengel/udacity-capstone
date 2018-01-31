@@ -1,35 +1,21 @@
 package br.com.ericksprengel.marmitop.ui.main;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-
-import br.com.ericksprengel.mamitop.data.MtopMenuItem;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Arrays;
 
 import br.com.ericksprengel.marmitop.BuildConfig;
 import br.com.ericksprengel.marmitop.R;
@@ -38,15 +24,11 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Views
     @BindView(R.id.main_ac_bottomnavigationview) BottomNavigationView mBottomNavigationView;
     @BindView(R.id.main_ac_viewpager) ViewPager mViewPager;
 
     MainPagerAdapter mPagerAdapter;
-
-    // Database objects
-    FirebaseDatabase mFirebaseDatabase;
-    DatabaseReference mMenuDatabaseReference;
-    ChildEventListener mChildEventListener;
 
     private String mUsername;
 
@@ -77,11 +59,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        // Database init
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        // Firebase init
         mFirebaseAuth = FirebaseAuth.getInstance();
-        mMenuDatabaseReference = mFirebaseDatabase.getReference("menus");
-
 
         mBottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         mPagerAdapter = new MainPagerAdapter(getSupportFragmentManager());
@@ -167,16 +146,7 @@ public class MainActivity extends AppCompatActivity {
         if (mAuthStateListener != null) {
             mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
         }
-        //TODO: mMenuAdapter.clear();
-        detachDatabaseReadListener();
     }
-
-    private void loadMenu() {
-        Toast.makeText(this, "TODO: load menu", Toast.LENGTH_LONG).show();
-    }
-
-
-
 
     // FIREBASE AUTH
 
@@ -193,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
-                    loadMenu();
                     onSignedInInitialize(user.getDisplayName());
                 } else {
                     onSignedOutCleanup();
@@ -219,40 +188,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void onSignedInInitialize(String username) {
         mUsername = username;
-        attachDatabaseReadListener();
         Toast.makeText(MainActivity.this, "You're now signed in. Welcome, " + mUsername, Toast.LENGTH_SHORT).show();
     }
 
     private void onSignedOutCleanup() {
         mUsername = ""; //TODO: remove it.
-        //TODO: mMenuAdapter.clear();
-        detachDatabaseReadListener();
-    }
-
-    private void attachDatabaseReadListener() {
-        if (mChildEventListener == null) {
-            mChildEventListener = new ChildEventListener() {
-                @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    MtopMenuItem mtopMenuItem = dataSnapshot.getValue(MtopMenuItem.class);
-                    Log.e("SPRENGEL", "Novo prato!" + mtopMenuItem.getName());
-                    //TODO: mMenuAdapter.add(friendlyMessage);
-                }
-
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
-                public void onChildRemoved(DataSnapshot dataSnapshot) {}
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
-                public void onCancelled(DatabaseError databaseError) {}
-            };
-            mMenuDatabaseReference.addChildEventListener(mChildEventListener);
-        }
-    }
-
-    private void detachDatabaseReadListener() {
-        if (mChildEventListener != null) {
-            mMenuDatabaseReference.removeEventListener(mChildEventListener);
-            mChildEventListener = null;
-        }
     }
 
     @Override
@@ -274,18 +214,5 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         }
-    }
-
-
-
-
-    //TODO: it's just for tests
-    private void createMtopMenuItem() {
-        MtopMenuItem menuItem = new MtopMenuItem();
-        menuItem.setName("Feijoada");
-        menuItem.setDescription("arroz, feijão e fritas." +  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-
-        Toast.makeText(MainActivity.this, menuItem.getDescription(), Toast.LENGTH_SHORT).show();
-        mMenuDatabaseReference.child(new SimpleDateFormat("yyyy-MM-dd").format(new Date())).push().setValue(menuItem);
     }
 }
