@@ -1,14 +1,17 @@
 package br.com.ericksprengel.marmitop.data;
 
 import java.util.List;
+import java.util.Map;
 
 public class MtopMenuItem {
 
+    private String key;
+
     private String name;
     private String description;
-    private List<Option> options;
+    private Map<String, Option> options;
 
-    class Option {
+    public static class Option {
         private String name;
         private float price;
 
@@ -29,6 +32,13 @@ public class MtopMenuItem {
         }
     }
 
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public String getKey() {
+        return key;
+    }
 
     public String getName() {
         return name;
@@ -46,11 +56,11 @@ public class MtopMenuItem {
         this.description = description;
     }
 
-    public List<Option> getOptions() {
+    public Map<String, Option> getOptions() {
         return options;
     }
 
-    public void setOptions(List<Option> options) {
+    public void setOptions(Map<String, Option> options) {
         this.options = options;
     }
 }

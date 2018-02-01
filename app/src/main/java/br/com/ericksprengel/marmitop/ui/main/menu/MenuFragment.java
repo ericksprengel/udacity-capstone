@@ -95,7 +95,7 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnMtopMenuItem
     @Override
     public void onMtopMenuItemClick(MtopMenuItem mtopMenuItemtem) {
         Toast.makeText(getContext(), "Fazer adicionar ao pedido!\n" + mtopMenuItemtem.getName(), Toast.LENGTH_SHORT).show();
-        startActivity(AddToOrderActivity.getStartIntent(getContext()));
+        startActivity(AddToOrderActivity.getStartIntent(getContext(), mtopMenuItemtem));
     }
 
 
@@ -138,6 +138,7 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnMtopMenuItem
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     MtopMenuItem mtopMenuItem = dataSnapshot.getValue(MtopMenuItem.class);
+                    mtopMenuItem.setKey(dataSnapshot.getKey());
                     Log.e("SPRENGEL", "Novo prato!" + mtopMenuItem.getName());
                     mMenuAdapter.add(mtopMenuItem);
                 }
