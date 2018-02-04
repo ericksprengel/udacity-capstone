@@ -65,8 +65,8 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnMtopMenuItem
         // - Database
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mMenuDatabaseReference = mFirebaseDatabase.getReference("menus")
-                .child("2018-01-29");
 //                .child(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+                .child("2018-01-29");
 
         // Menu list init
         mMenuAdapter = new MenuAdapter(this);
