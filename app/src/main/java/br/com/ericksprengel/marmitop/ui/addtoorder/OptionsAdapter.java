@@ -80,8 +80,12 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
         notifyItemChanged(mSelectedItem);
     }
 
-    public String getSelectedOption() {
+    public String getSelectedOptionKey() {
         return mOptions.get(mSelectedItem).first;
+    }
+
+    public MtopMenuItem.Option getSelectedOption() {
+        return mOptions.get(mSelectedItem).second;
     }
 
     public void setSelectedOption(String option) {

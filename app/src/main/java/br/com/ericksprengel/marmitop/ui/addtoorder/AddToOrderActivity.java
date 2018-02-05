@@ -87,13 +87,13 @@ public class AddToOrderActivity extends AuthenticatedActivity implements Options
         mUserOrdersDatabaseReference = mFirebaseDatabase.getReference("user_orders")
 //                .child(new SimpleDateFormat("yyyy-MM-dd").format(new Date()))
                 .child(user.getUid())
-                .child("2018-01-29");
+                .child("2018-01-29")
+                .child("orders");
 
         mOptionsAdapter = new OptionsAdapter(this);
         mOptions.setAdapter(mOptionsAdapter);
 
         mQuantity.setOnQuantityListener(this);
-        authenticate();
     }
 
     @Override
@@ -110,7 +110,7 @@ public class AddToOrderActivity extends AuthenticatedActivity implements Options
 
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putString(STATE_OPTION, mOptionsAdapter.getSelectedOption());
+        savedInstanceState.putString(STATE_OPTION, mOptionsAdapter.getSelectedOptionKey());
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -174,7 +174,7 @@ public class AddToOrderActivity extends AuthenticatedActivity implements Options
 
     @OnClick(R.id.add_to_order_ac_add_to_order_button)
     public void addToOrder() {
-        Order order = new Order(mQuantity.getQuantity(), mOptionsAdapter.getSelectedOption());
+        Order order = new Order(mMtopMenuItem, mQuantity.getQuantity(), mOptionsAdapter.getSelectedOption());
         mUserOrdersDatabaseReference.push().setValue(order);
         finish();
     }

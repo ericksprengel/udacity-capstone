@@ -12,6 +12,7 @@ public class MtopMenuItem {
     private Map<String, Option> options;
 
     public static class Option {
+        private String key;
         private String name;
         private float price;
 

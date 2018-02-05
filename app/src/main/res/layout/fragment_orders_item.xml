@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/orders_fg_item_menu_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="29/01/2018" />
+
+    <TextView
+        android:id="@+id/orders_fg_item_total_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/orders_fg_item_description_more_textview"
+        tools:text="R$14,00" />
+
+    <TextView
+        android:id="@+id/orders_fg_item_description_1_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toEndOf="@+id/orders_fg_item_menu_textview"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Filé de Frango" />
+
+    <TextView
+        android:id="@+id/orders_fg_item_description_more_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Mais items..."
+        android:textStyle="italic"
+        app:layout_constraintStart_toStartOf="@+id/orders_fg_item_description_1_textview"
+        app:layout_constraintTop_toBottomOf="@+id/orders_fg_item_description_1_textview" />
+</android.support.constraint.ConstraintLayout>
