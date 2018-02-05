@@ -1,50 +1,37 @@
-package br.com.ericksprengel.marmitop.ui.main.orders;
+package br.com.ericksprengel.marmitop.ui.orderday;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
-import com.firebase.ui.auth.data.model.User;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import br.com.ericksprengel.marmitop.R;
-import br.com.ericksprengel.marmitop.data.MtopMenuItem;
 import br.com.ericksprengel.marmitop.data.Order;
 import br.com.ericksprengel.marmitop.data.OrderDay;
-import br.com.ericksprengel.marmitop.ui.AuthenticatedFragment;
-import br.com.ericksprengel.marmitop.ui.addtoorder.AddToOrderActivity;
-import br.com.ericksprengel.marmitop.ui.main.menu.MenuAdapter;
-import br.com.ericksprengel.marmitop.ui.orderday.OrderDayActivity;
+import br.com.ericksprengel.marmitop.ui.AuthenticatedActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+public class OrderDayActivity extends AuthenticatedActivity implements OrdersAdapter.OnOrderQuantityListener {
 
-public class OrdersFragment extends AuthenticatedFragment implements OrdersAdapter.OnOrderDayClickListener {
+    private static final String LOG_TAG = OrderDayActivity.class.getName();
+
+    public static final String EXTRA_ORDER_DAY_KEY = "extra_order_day_key";
 
     // Views
-    @BindView(R.id.order_days_frag_recyclerview) RecyclerView mRecyclerView;
+    @BindView(R.id.order_day_ac_recyclerview) RecyclerView mRecyclerView;
 
+    private String mMenuId;
     private OrdersAdapter mOrdersAdapter;
 
     // Database objects
@@ -52,16 +39,21 @@ public class OrdersFragment extends AuthenticatedFragment implements OrdersAdapt
     DatabaseReference mOrdersDatabaseReference;
     ChildEventListener mChildEventListener;
 
-    public OrdersFragment() {}
-
-    public static OrdersFragment newInstance() {
-        return new OrdersFragment();
+    public static Intent getStartIntent(Context context, OrderDay orderDay) {
+        Intent intent = new Intent(context, OrderDayActivity.class);
+        intent.putExtra(EXTRA_ORDER_DAY_KEY, orderDay.getMenuId());
+        return intent;
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_orders, container, false);
-        ButterKnife.bind(this, rootView);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_order_day);
+        ButterKnife.bind(this);
+
+        mMenuId = getIntent().getStringExtra(EXTRA_ORDER_DAY_KEY);
+
+        setTitle(String.format("Pedido (%s)", mMenuId));
 
         // Firebase init
         // - Database
@@ -70,10 +62,7 @@ public class OrdersFragment extends AuthenticatedFragment implements OrdersAdapt
         // Menu list init
         mOrdersAdapter = new OrdersAdapter(this);
         mRecyclerView.setAdapter(mOrdersAdapter);
-
-        return rootView;
     }
-
     @Override
     protected void onSignedInInitialize(FirebaseUser user) {
         attachDatabaseReadListener(user);
@@ -93,24 +82,43 @@ public class OrdersFragment extends AuthenticatedFragment implements OrdersAdapt
     }
 
     @Override
-    public void onOrderDayClick(OrderDay orderDay) {
-        Toast.makeText(getContext(), "Exibir order day!\n" + orderDay.getMenuId(), Toast.LENGTH_SHORT).show();
-        startActivity(OrderDayActivity.getStartIntent(getContext(), orderDay));
+    public void onOrderQuantityChanged(String orderKey, Order order) {
+        if(order.getQuantity() == 0) {
+            Toast.makeText(this, "TODO: Selecione 'Salvar' para remover este item da lista.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @OnClick(R.id.order_day_ac_save_buton)
+    public void saveOrderChanges() {
+        for (int i = 0; i < mOrdersAdapter.getItemCount(); i++) {
+            String orderKey = mOrdersAdapter.getOrderKey(i);
+            Order order = mOrdersAdapter.getOrder(i);
+
+            if(order.getQuantity() == 0) {
+                mOrdersDatabaseReference.child(orderKey).removeValue();
+            } else {
+                mOrdersDatabaseReference.child(orderKey)
+                        .child("quantity").setValue(order.getQuantity());
+            }
+        }
+        finish();
     }
 
     private void attachDatabaseReadListener(FirebaseUser user) {
         if(mOrdersDatabaseReference == null) {
             mOrdersDatabaseReference = mFirebaseDatabase.getReference("user_orders")
-                    .child(user.getUid());
+                    .child(user.getUid())
+                    .child(mMenuId)
+                    .child("orders");
         }
 
         if (mChildEventListener == null) {
             mChildEventListener = new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    OrderDay orderDay = dataSnapshot.getValue(OrderDay.class);
-                    orderDay.setMenuId(dataSnapshot.getKey());
-                    mOrdersAdapter.add(orderDay);
+                    String orderKey = dataSnapshot.getKey();
+                    Order order = dataSnapshot.getValue(Order.class);
+                    mOrdersAdapter.add(orderKey, order);
                 }
 
                 public void onChildChanged(DataSnapshot dataSnapshot, String s) {
