@@ -2,29 +2,22 @@ package br.com.ericksprengel.marmitop.ui.addtoorder;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v4.util.Pair;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +25,7 @@ import br.com.ericksprengel.marmitop.R;
 import br.com.ericksprengel.marmitop.data.MtopMenuItem;
 import br.com.ericksprengel.marmitop.data.Order;
 import br.com.ericksprengel.marmitop.ui.AuthenticatedActivity;
-import br.com.ericksprengel.marmitop.ui.main.menu.MenuAdapter;
+import br.com.ericksprengel.marmitop.utils.MenuUtils;
 import br.com.ericksprengel.marmitop.views.QuantityView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -81,13 +74,11 @@ public class AddToOrderActivity extends AuthenticatedActivity implements Options
         // - Database
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mMenuItemDatabaseReference = mFirebaseDatabase.getReference("menus")
-//                .child(new SimpleDateFormat("yyyy-MM-dd").format(new Date()))
-                .child("2018-01-29")
+                .child(MenuUtils.getMenuOfTheDay())
                 .child(mtopMenuItem);
         mUserOrdersDatabaseReference = mFirebaseDatabase.getReference("user_orders")
-//                .child(new SimpleDateFormat("yyyy-MM-dd").format(new Date()))
                 .child(user.getUid())
-                .child("2018-01-29")
+                .child(MenuUtils.getMenuOfTheDay())
                 .child("orders");
 
         mOptionsAdapter = new OptionsAdapter(this);

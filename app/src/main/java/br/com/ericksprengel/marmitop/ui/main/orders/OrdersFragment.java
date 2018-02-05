@@ -42,8 +42,7 @@ import butterknife.OnClick;
 public class OrdersFragment extends AuthenticatedFragment implements OrdersAdapter.OnOrderDayClickListener {
 
     // Views
-    @BindView(R.id.order_days_frag_recycleview)
-    RecyclerView mRecyclerView;
+    @BindView(R.id.order_days_frag_recyclerview) RecyclerView mRecyclerView;
 
     private OrdersAdapter mOrdersAdapter;
 

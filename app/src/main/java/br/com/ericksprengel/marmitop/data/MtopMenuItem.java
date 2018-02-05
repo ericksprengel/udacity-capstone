@@ -14,7 +14,14 @@ public class MtopMenuItem {
     public static class Option {
         private String key;
         private String name;
-        private float price;
+        private double price;
+
+        public Option() {}
+
+        public Option(String name, double price) {
+            this.name = name;
+            this.price = price;
+        }
 
         public String getName() {
             return name;
@@ -24,11 +31,11 @@ public class MtopMenuItem {
             this.name = name;
         }
 
-        public float getPrice() {
+        public double getPrice() {
             return price;
         }
 
-        public void setPrice(float price) {
+        public void setPrice(double price) {
             this.price = price;
         }
     }

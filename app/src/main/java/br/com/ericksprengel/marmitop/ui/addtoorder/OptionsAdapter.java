@@ -56,10 +56,6 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
             mName.setText(mOption.getName());
             mName.setChecked(position == mSelectedItem);
             mPrice.setText(NumberFormat.getCurrencyInstance(LOCALE_PT_BR).format(mOption.getPrice()));
-//            Picasso.with(mPoster.getContext())
-//                    .load(mMtopMenuItem.getImage())
-//                    .placeholder(R.drawable.mtopMenuItem_poster_thumbnail_placeholder)
-//                    .into(mPoster);
         }
 
         @Override

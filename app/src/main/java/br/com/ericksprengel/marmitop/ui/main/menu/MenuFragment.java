@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +18,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import br.com.ericksprengel.marmitop.data.MtopMenuItem;
 import br.com.ericksprengel.marmitop.R;
+import br.com.ericksprengel.marmitop.data.MtopMenuItem;
 import br.com.ericksprengel.marmitop.ui.addtoorder.AddToOrderActivity;
+import br.com.ericksprengel.marmitop.utils.MenuUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -65,8 +62,7 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnMtopMenuItem
         // - Database
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mMenuDatabaseReference = mFirebaseDatabase.getReference("menus")
-//                .child(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-                .child("2018-01-29");
+                .child(MenuUtils.getMenuOfTheDay());
 
         // Menu list init
         mMenuAdapter = new MenuAdapter(this);
@@ -139,7 +135,6 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnMtopMenuItem
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     MtopMenuItem mtopMenuItem = dataSnapshot.getValue(MtopMenuItem.class);
                     mtopMenuItem.setKey(dataSnapshot.getKey());
-                    Log.e("SPRENGEL", "Novo prato!" + mtopMenuItem.getName());
                     mMenuAdapter.add(mtopMenuItem);
                 }
 
@@ -159,22 +154,4 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnMtopMenuItem
         }
     }
 
-
-
-
-
-
-
-
-
-
-    //TODO: it's just for tests
-    private void createMtopMenuItem() {
-        MtopMenuItem menuItem = new MtopMenuItem();
-        menuItem.setName("Feijoada");
-        menuItem.setDescription("arroz, feijão e fritas." +  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-
-        Toast.makeText(getContext(), menuItem.getDescription(), Toast.LENGTH_SHORT).show();
-        mMenuDatabaseReference.child(new SimpleDateFormat("yyyy-MM-dd").format(new Date())).push().setValue(menuItem);
-    }
 }
