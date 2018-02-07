@@ -3,4 +3,7 @@
     <string name="title_menu">Cardápio</string>
     <string name="title_orders">Pedidos</string>
     <string name="title_loyalty_program">Fidelidade</string>
+
+    <string name="appwidget_text">Cardápio do Dia</string>
+    <string name="menu_wd_menu_name">Cardápio - %s</string>
 </resources>

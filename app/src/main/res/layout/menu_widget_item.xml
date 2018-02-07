@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/menu_wd_menu_item_name_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_medium"
+        tools:text="File de Frango"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/primary_text_light" />
+    <TextView
+        android:id="@+id/menu_wd_menu_item_description_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginBottom="@dimen/margin_medium"
+        tools:text="Arroz, feijao e frango."
+        android:textSize="14sp"
+        android:textColor="@android:color/primary_text_light" />
+
+</LinearLayout>

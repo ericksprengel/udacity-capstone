@@ -1,0 +1,29 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="@dimen/widget_margin"
+    android:orientation="vertical"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@+id/menu_wd_menu_name_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:contentDescription="@string/appwidget_text"
+        android:padding="16dp"
+        tools:text="Menu - 02/07/2018"
+        android:textColor="#ffffff"
+        android:textSize="24sp" />
+
+    <ListView
+        android:id="@+id/menu_wd_menu_items_listview"
+        android:layout_width="match_parent"
+        android:divider="#ccc"
+        android:dividerHeight="1dp"
+        android:layout_margin="@dimen/margin_medium"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>
