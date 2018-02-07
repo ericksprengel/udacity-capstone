@@ -1,0 +1,107 @@
+{
+  "project_info": {
+    "project_number": "556192823901",
+    "firebase_url": "https://marmitop-5fdb2.firebaseio.com",
+    "project_id": "marmitop-5fdb2",
+    "storage_bucket": "marmitop-5fdb2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556192823901:android:9561447314d94994",
+        "android_client_info": {
+          "package_name": "br.com.ericksprengel.marmitop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "556192823901-r98cbfeg057qecelg581g5hldgkk6tb8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.ericksprengel.marmitop",
+            "certificate_hash": "8e5691a3933959a5300ff8c964df7b35d4ef720f"
+          }
+        },
+        {
+          "client_id": "556192823901-ejvpdg0pcfem69h9aim35o0ilhb40cq5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.ericksprengel.marmitop",
+            "certificate_hash": "0fde90df83a345f67a52f668194ba7f2fbf5419c"
+          }
+        },
+        {
+          "client_id": "556192823901-1f97gad02sgrlvsgg51s0ib5f0u00gpa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwK0RLvqAW4Ukn2kRJYLhr4O5w8Rftcx4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "556192823901-1f97gad02sgrlvsgg51s0ib5f0u00gpa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:556192823901:android:9cc082b8e431582c",
+        "android_client_info": {
+          "package_name": "br.com.ericksprengel.marmitopadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "556192823901-01ngpp1vj4rnu60n51rhrh608v1np0fr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.ericksprengel.marmitopadmin",
+            "certificate_hash": "8e5691a3933959a5300ff8c964df7b35d4ef720f"
+          }
+        },
+        {
+          "client_id": "556192823901-1f97gad02sgrlvsgg51s0ib5f0u00gpa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwK0RLvqAW4Ukn2kRJYLhr4O5w8Rftcx4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "556192823901-1f97gad02sgrlvsgg51s0ib5f0u00gpa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
