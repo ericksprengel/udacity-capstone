@@ -1,8 +1,5 @@
 package br.com.ericksprengel.marmitop.utils;
 
-import android.content.Context;
-import android.widget.Toast;
-
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 

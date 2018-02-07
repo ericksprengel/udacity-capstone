@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.ericksprengel.marmitop">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:name=".ui.MarmitopApp"
         android:allowBackup="true"
@@ -20,7 +22,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.addtoorder.AddToOrderActivity" />
-        <activity android:name=".ui.orderday.OrderDayActivity"></activity>
+        <activity android:name=".ui.orderday.OrderDayActivity" />
+        <activity android:name=".ui.loyaltycodereader.LoyaltyCodeReaderActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

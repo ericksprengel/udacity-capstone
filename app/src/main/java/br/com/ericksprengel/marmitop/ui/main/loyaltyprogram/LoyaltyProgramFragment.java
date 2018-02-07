@@ -20,11 +20,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import br.com.ericksprengel.marmitop.R;
 import br.com.ericksprengel.marmitop.data.OrderDay;
 import br.com.ericksprengel.marmitop.ui.AuthenticatedFragment;
+import br.com.ericksprengel.marmitop.ui.loyaltycodereader.LoyaltyCodeReaderActivity;
 import br.com.ericksprengel.marmitop.ui.main.orders.OrdersAdapter;
 import br.com.ericksprengel.marmitop.ui.main.orders.OrdersFragment;
 import br.com.ericksprengel.marmitop.ui.orderday.OrderDayActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class LoyaltyProgramFragment extends AuthenticatedFragment {
@@ -76,6 +78,11 @@ public class LoyaltyProgramFragment extends AuthenticatedFragment {
         super.onPause();
         mLoyaltyProgramPointsAdapter.clear();
         detachDatabaseReadListener();
+    }
+
+    @OnClick(R.id.loyalty_program_fg_read_code)
+    public void readCode() {
+        startActivity(LoyaltyCodeReaderActivity.getStartIntent(getContext()));
     }
 
     private void attachDatabaseReadListener(FirebaseUser user) {
