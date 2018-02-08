@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        release {
+            keyAlias 'release'
+            keyPassword 'pass1234'
+            storeFile file('release.jks')
+            storePassword 'pass1234'
+        }
+    }
     compileSdkVersion 26
     defaultConfig {
         applicationId "br.com.ericksprengel.marmitop"
@@ -14,6 +22,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }
@@ -21,6 +30,7 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    // Google Vision
     implementation 'com.google.android.gms:play-services-vision:11.8.0'
 
     // Support Libraries
@@ -56,8 +66,11 @@ dependencies {
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-simplexml:2.3.0'
-
+    implementation('com.squareup.retrofit2:converter-simplexml:2.3.0'){
+        exclude module: 'stax'
+        exclude module: 'stax-api'
+        exclude module: 'xpp3'
+    }
     // Chuck dependencies
     debugImplementation 'com.readystatesoftware.chuck:library:1.1.0'
     releaseImplementation 'com.readystatesoftware.chuck:library-no-op:1.1.0'

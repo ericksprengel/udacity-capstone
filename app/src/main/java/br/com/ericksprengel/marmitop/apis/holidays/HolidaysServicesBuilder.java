@@ -19,7 +19,7 @@ import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
-public class HolidaysServicesBuilder {
+class HolidaysServicesBuilder {
 
     // It's a temporary key. It'll expire soon.
     private static final String API_KEY = "ZXJpY2suc3ByZW5nZWxAZ21haWwuY29tJmhhc2g9MTc3Mjk5MzIz";
@@ -61,7 +61,7 @@ public class HolidaysServicesBuilder {
 
     }
 
-    public static HolidaysServices build(Context context) {
+    static HolidaysServices build(Context context) {
         if (mRetrofit == null) {
             initRetrofit(context);
         }
