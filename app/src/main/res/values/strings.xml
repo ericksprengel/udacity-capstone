@@ -6,4 +6,6 @@
 
     <string name="appwidget_text">Cardápio do Dia</string>
     <string name="menu_wd_menu_name">Cardápio - %s</string>
+
+    <string translatable="false" name="holidays_api_base_url">http://www.calendario.com.br/</string>
 </resources>

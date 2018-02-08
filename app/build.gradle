@@ -54,6 +54,13 @@ dependencies {
     // - for Firebase Auth
     implementation 'com.firebaseui:firebase-ui-auth:3.2.1'
 
+    // Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-simplexml:2.3.0'
+
+    // Chuck dependencies
+    debugImplementation 'com.readystatesoftware.chuck:library:1.1.0'
+    releaseImplementation 'com.readystatesoftware.chuck:library-no-op:1.1.0'
 }
 
 apply plugin: 'com.google.gms.google-services'
