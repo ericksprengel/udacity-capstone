@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import br.com.ericksprengel.marmitop.R;
@@ -35,30 +34,24 @@ public class QuantityView extends FrameLayout {
 
     public QuantityView(Context context) {
         super(context);
-        init(null);
+        init();
     }
 
     public QuantityView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(attrs);
+        init();
     }
 
     public QuantityView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init(attrs);
+        init();
     }
 
 
-    private void init(AttributeSet attrs) {
+    private void init() {
         inflate(getContext(), R.layout.view_quantity, this);
         ButterKnife.bind(this);
         setSaveEnabled(true);
-
-//        mPictureView = (ImageView) findViewById(R.id.view_take_picture_imageview);
-//        mPictureActionsContainer = findViewById(R.id.view_take_picture_actions_container);
-//        mPictureDeleteAction = findViewById(R.id.view_take_picture_delete_action);
-//
-//        mPictureActionsContainer.setVisibility(View.GONE);
     }
 
     public void setOnQuantityListener(OnQuantityListener listener) {

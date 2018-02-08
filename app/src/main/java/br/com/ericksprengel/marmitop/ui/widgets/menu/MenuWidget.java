@@ -19,7 +19,7 @@ public class MenuWidget extends AppWidgetProvider {
         // Construct the RemoteViews object
         final RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.menu_widget);
 
-        // Menu name (textview)
+        // Menu name (text view)
         views.setTextViewText(R.id.menu_wd_menu_name_textview, context.getString(R.string.menu_wd_menu_name, MenuUtils.getMenuOfTheDay()));
 
         // Menu items (list)

@@ -7,9 +7,9 @@ import retrofit2.http.Query;
 
 public interface HolidaysServices {
 
-    public static final String QUERY_STATE_SP = "SP";
+    String QUERY_STATE_SP = "SP";
 
-    public static final String QUERY_CITY_SAO_PAULO = "SAO_PAULO";
+    String QUERY_CITY_SAO_PAULO = "SAO_PAULO";
 
     @GET("api/api_feriados.php")
     Call<Events> getHolidays(@Query("ano") int year, @Query("estado") String state, @Query("cidade") String city);

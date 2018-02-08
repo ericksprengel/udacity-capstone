@@ -3,7 +3,6 @@ package br.com.ericksprengel.marmitop.ui.widgets.menu;
 import android.content.Context;
 import android.widget.RemoteViews;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -24,7 +23,7 @@ public class MenuWidgetViewsFactory implements MenuWidgetService.RemoteViewsFact
     private Context mContext;
     private List<MtopMenuItem> mMtopMenuItems;
 
-    public MenuWidgetViewsFactory(Context context) {
+    MenuWidgetViewsFactory(Context context) {
         mContext = context;
     }
 
@@ -46,6 +45,7 @@ public class MenuWidgetViewsFactory implements MenuWidgetService.RemoteViewsFact
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot dataSnapshotChild : dataSnapshot.getChildren()) {
                     MtopMenuItem mtopMenuItem = dataSnapshotChild.getValue(MtopMenuItem.class);
+                    assert mtopMenuItem != null;
                     mtopMenuItem.setKey(dataSnapshot.getKey());
                     mMtopMenuItems.add(mtopMenuItem);
                 }

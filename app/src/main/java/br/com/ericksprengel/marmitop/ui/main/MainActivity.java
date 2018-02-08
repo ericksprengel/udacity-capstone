@@ -6,12 +6,11 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -24,13 +23,13 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
+
     // Views
     @BindView(R.id.main_ac_bottomnavigationview) BottomNavigationView mBottomNavigationView;
     @BindView(R.id.main_ac_viewpager) ViewPager mViewPager;
 
     MainPagerAdapter mPagerAdapter;
-
-    private String mUsername;
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -75,11 +74,9 @@ public class MainActivity extends AppCompatActivity {
                 int pageWidth = page.getWidth();
                 int pageHeight = page.getHeight();
 
-                View view = page; //page.findViewById(R.id.step_frag_description_textview);
-
                 if (position < -1) { // [-Infinity,-1)
                     // This page is way off-screen to the left.
-                    view.setAlpha(0);
+                    page.setAlpha(0);
 
                 } else if (position <= 1) { // [-1,1]
                     // Modify the default slide transition to shrink the page as well
@@ -87,22 +84,22 @@ public class MainActivity extends AppCompatActivity {
                     float vertMargin = pageHeight * (1 - scaleFactor) / 2;
                     float horzMargin = pageWidth * (1 - scaleFactor) / 2;
                     if (position < 0) {
-                        view.setTranslationX(horzMargin - vertMargin / 2);
+                        page.setTranslationX(horzMargin - vertMargin / 2);
                     } else {
-                        view.setTranslationX(-horzMargin + vertMargin / 2);
+                        page.setTranslationX(-horzMargin + vertMargin / 2);
                     }
 
                     // Scale the page down (between MIN_SCALE and 1)
-                    view.setScaleX(scaleFactor);
-                    view.setScaleY(scaleFactor);
+                    page.setScaleX(scaleFactor);
+                    page.setScaleY(scaleFactor);
 
                     // Fade the page relative to its size.
-                    view.setAlpha(MIN_ALPHA +
+                    page.setAlpha(MIN_ALPHA +
                             (scaleFactor - MIN_SCALE) /
                                     (1 - MIN_SCALE) * (1 - MIN_ALPHA));
                 } else { // (1,+Infinity]
                     // This page is way off-screen to the right.
-                    view.setAlpha(0);
+                    page.setAlpha(0);
                 }
             }
         });
@@ -161,11 +158,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    // User is signed in
-                    onSignedInInitialize(user.getDisplayName());
-                } else {
-                    onSignedOutCleanup();
+                if (user == null) {
                     // User is signed out
                     AuthUI.IdpConfig idpConfigPhone = new AuthUI.IdpConfig.PhoneBuilder()
                             .setDefaultCountryIso("br")
@@ -186,31 +179,20 @@ public class MainActivity extends AppCompatActivity {
         };
     }
 
-    private void onSignedInInitialize(String username) {
-        mUsername = username;
-        Toast.makeText(MainActivity.this, "You're now signed in. Welcome, " + mUsername, Toast.LENGTH_SHORT).show();
-    }
-
-    private void onSignedOutCleanup() {
-        mUsername = ""; //TODO: remove it.
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //TODO: super.onActivityResult(requestCode, resultCode, data);
         // RC_SIGN_IN is the request code you passed into startActivityForResult(...) when starting the sign in flow.
         if (requestCode == RC_SIGN_IN) {
-            IdpResponse response = IdpResponse.fromResultIntent(data);
-
+            // TODO: use the response to show user information: IdpResponse response = IdpResponse.fromResultIntent(data);
             // Successfully signed in
             if (resultCode == RESULT_OK) {
-                return;
+                Log.d(LOG_TAG, "Signed in.");
             } else if(resultCode == RESULT_CANCELED) {
                 // Sign in was canceled by the user, finish the activity
-                Toast.makeText(this, "Sign in canceled", Toast.LENGTH_SHORT).show(); //TODO: string
+                Log.w(LOG_TAG,"Sign in canceled");
                 finish();
             } else {
-                Toast.makeText(this, "Something is wrong.", Toast.LENGTH_SHORT).show(); //TODO: string
+                Log.e(LOG_TAG, "Something is wrong.");
                 finish();
             }
         }

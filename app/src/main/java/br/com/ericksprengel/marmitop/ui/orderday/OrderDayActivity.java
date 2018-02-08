@@ -3,9 +3,8 @@ package br.com.ericksprengel.marmitop.ui.orderday;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
-import android.widget.Button;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -23,8 +22,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class OrderDayActivity extends AuthenticatedActivity implements OrdersAdapter.OnOrderQuantityListener {
-
-    private static final String LOG_TAG = OrderDayActivity.class.getName();
 
     public static final String EXTRA_ORDER_DAY_KEY = "extra_order_day_key";
 
@@ -53,7 +50,7 @@ public class OrderDayActivity extends AuthenticatedActivity implements OrdersAda
 
         mMenuId = getIntent().getStringExtra(EXTRA_ORDER_DAY_KEY);
 
-        setTitle(String.format("Pedido (%s)", mMenuId));
+        setTitle(getString(R.string.order_day_ac_title, mMenuId));
 
         // Firebase init
         // - Database
@@ -69,7 +66,7 @@ public class OrderDayActivity extends AuthenticatedActivity implements OrdersAda
     }
 
     @Override
-    public void onSignedOutCleanup(FirebaseUser user) {
+    public void onSignedOutCleanup() {
         mOrdersAdapter.clear();
         detachDatabaseReadListener();
     }
@@ -84,7 +81,10 @@ public class OrderDayActivity extends AuthenticatedActivity implements OrdersAda
     @Override
     public void onOrderQuantityChanged(String orderKey, Order order) {
         if(order.getQuantity() == 0) {
-            Toast.makeText(this, "TODO: Selecione 'Salvar' para remover este item da lista.", Toast.LENGTH_SHORT).show();
+            Snackbar.make(mRecyclerView,
+                    getString(R.string.order_day_ac_item_quantity_zero_alert,
+                            getString(R.string.order_day_ac_save_button)),
+                    Snackbar.LENGTH_LONG).show();
         }
     }
 

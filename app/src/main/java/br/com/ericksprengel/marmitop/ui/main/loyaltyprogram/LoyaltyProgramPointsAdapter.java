@@ -7,23 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
 import br.com.ericksprengel.marmitop.R;
-import br.com.ericksprengel.marmitop.data.Order;
-import br.com.ericksprengel.marmitop.data.OrderDay;
 
 public class LoyaltyProgramPointsAdapter extends RecyclerView.Adapter<LoyaltyProgramPointsAdapter.ViewHolder> {
 
-    private Locale LOCALE_PT_BR = new Locale("pt", "BR");
+    private static final int LOYALTY_POINTS_TOTAL = 12;
 
     private int mDoneCounter = 0;
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        OrderDay mOrderDay;
+    class ViewHolder extends RecyclerView.ViewHolder {
         TextView mPoint;
         View mDone;
 
@@ -65,7 +57,7 @@ public class LoyaltyProgramPointsAdapter extends RecyclerView.Adapter<LoyaltyPro
 
     @Override
     public int getItemCount() {
-        return 12;
+        return LOYALTY_POINTS_TOTAL;
     }
 
 }

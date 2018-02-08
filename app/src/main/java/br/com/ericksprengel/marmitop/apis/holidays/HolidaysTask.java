@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 import br.com.ericksprengel.marmitop.data.Events;
 import retrofit2.Call;
@@ -33,7 +34,7 @@ public class HolidaysTask extends AsyncTask<Void, Void, Events> {
     protected Events doInBackground(Void... voids) {
         HolidaysServices services = HolidaysServicesBuilder.build(mContext);
         mContext = null;
-        Call<Events> call = services.getHolidays(2018, HolidaysServices.QUERY_STATE_SP, HolidaysServices.QUERY_CITY_SAO_PAULO);
+        Call<Events> call = services.getHolidays(Calendar.getInstance().get(Calendar.YEAR), HolidaysServices.QUERY_STATE_SP, HolidaysServices.QUERY_CITY_SAO_PAULO);
         try {
             Response<Events> response = call.execute();
             if(response.isSuccessful()) {

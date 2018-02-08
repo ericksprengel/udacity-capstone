@@ -16,7 +16,7 @@ import br.com.ericksprengel.marmitop.R;
 public class MenuAdapter  extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
     public interface OnMtopMenuItemClickListener {
-        void onMtopMenuItemClick(MtopMenuItem mtopMenuItemtem);
+        void onMtopMenuItemClick(MtopMenuItem mtopMenuItem);
     }
 
     private List<MtopMenuItem> mMtopMenuItems;
@@ -38,7 +38,7 @@ public class MenuAdapter  extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
             mMtopMenuItem = item;
             mName.setText(mMtopMenuItem.getName());
             mDescription.setText(mMtopMenuItem.getDescription());
-//            Picasso.with(mPoster.getContext())
+//            Picasso.with(mImage.getContext())
 //                    .load(mMtopMenuItem.getImage())
 //                    .placeholder(R.drawable.mtopMenuItem_poster_thumbnail_placeholder)
 //                    .into(mPoster);

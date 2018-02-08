@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -102,7 +101,6 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnMtopMenuItem
 
     @Override
     public void onMtopMenuItemClick(MtopMenuItem mtopMenuItemtem) {
-        Toast.makeText(getContext(), "Fazer adicionar ao pedido!\n" + mtopMenuItemtem.getName(), Toast.LENGTH_SHORT).show();
         startActivity(AddToOrderActivity.getStartIntent(getContext(), mtopMenuItemtem));
     }
 
@@ -120,7 +118,7 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnMtopMenuItem
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     // User is signed in
-                    onSignedInInitialize(user.getDisplayName());
+                    onSignedInInitialize();
                 } else {
                     onSignedOutCleanup();
                 }
@@ -131,7 +129,7 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnMtopMenuItem
 
 
 
-    private void onSignedInInitialize(String username) {
+    private void onSignedInInitialize() {
         attachDatabaseReadListener();
     }
 
@@ -169,16 +167,16 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnMtopMenuItem
 
     @Override
     public void onHolidaysLoaded(Events events) {
-        if(events != null) {
+        if (events != null) {
             Calendar now = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 
             // for debug warning popup for holidays.
-            try {
-                now.setTime(sdf.parse("12/02/2018"));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                now.setTime(sdf.parse("12/02/2018"));
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
 
             for(Event event : events.eventList) {
                 Calendar eventDate = Calendar.getInstance();
@@ -201,9 +199,9 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnMtopMenuItem
             return;
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle("Feriado!")
-                .setMessage(String.format("Hoje é '%s'.\nVerifique se estamos operando.", event.name ))
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.menu_fg_holiday_dialog_title)
+                .setMessage(getResources().getString(R.string.menu_fg_holiday_dialog_message, event.name ))
+                .setPositiveButton(R.string.menu_fg_holiday_dialog_positive_button, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         // nothing to do

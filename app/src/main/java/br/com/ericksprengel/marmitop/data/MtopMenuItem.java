@@ -1,6 +1,5 @@
 package br.com.ericksprengel.marmitop.data;
 
-import java.util.List;
 import java.util.Map;
 
 public class MtopMenuItem {

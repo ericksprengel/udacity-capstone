@@ -10,12 +10,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Currency;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import br.com.ericksprengel.marmitop.R;
 import br.com.ericksprengel.marmitop.data.MtopMenuItem;
@@ -76,21 +72,22 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
         notifyItemChanged(mSelectedItem);
     }
 
-    public String getSelectedOptionKey() {
+    String getSelectedOptionKey() {
         return mOptions.get(mSelectedItem).first;
     }
 
-    public MtopMenuItem.Option getSelectedOption() {
+    MtopMenuItem.Option getSelectedOption() {
         return mOptions.get(mSelectedItem).second;
     }
 
-    public void setSelectedOption(String option) {
+    void setSelectedOption(String option) {
         if(mOptions == null) {
             mPendingSelectedItem = option;
             return;
         }
         for(int i = 0; i < mOptions.size(); i++) {
             Pair pair = mOptions.get(i);
+            assert pair.first != null;
             if(pair.first.equals(option)) {
                 selectItem(i);
                 return;
@@ -100,11 +97,6 @@ public class OptionsAdapter extends RecyclerView.Adapter<OptionsAdapter.ViewHold
 
     OptionsAdapter(OnOptionClickListener listener) {
         this.mOnClickOptionListener = listener;
-    }
-
-    void clear() {
-        mOptions = null;
-        notifyDataSetChanged();
     }
 
     void setOptions(List<Pair<String, MtopMenuItem.Option>> options) {

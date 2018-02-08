@@ -52,7 +52,7 @@ public abstract class AuthenticatedActivity  extends AppCompatActivity {
                     // User is signed in
                     onSignedInInitialize(user);
                 } else {
-                    onSignedOutCleanup(user);
+                    onSignedOutCleanup();
                 }
             }
         };
@@ -60,5 +60,5 @@ public abstract class AuthenticatedActivity  extends AppCompatActivity {
 
     protected abstract void onSignedInInitialize(FirebaseUser user);
 
-    public abstract void onSignedOutCleanup(FirebaseUser user);
+    public abstract void onSignedOutCleanup();
 }

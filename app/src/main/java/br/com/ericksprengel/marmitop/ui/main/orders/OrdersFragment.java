@@ -3,41 +3,24 @@ package br.com.ericksprengel.marmitop.ui.main.orders;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.firebase.ui.auth.data.model.User;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import br.com.ericksprengel.marmitop.R;
-import br.com.ericksprengel.marmitop.data.MtopMenuItem;
-import br.com.ericksprengel.marmitop.data.Order;
 import br.com.ericksprengel.marmitop.data.OrderDay;
 import br.com.ericksprengel.marmitop.ui.AuthenticatedFragment;
-import br.com.ericksprengel.marmitop.ui.addtoorder.AddToOrderActivity;
-import br.com.ericksprengel.marmitop.ui.main.menu.MenuAdapter;
 import br.com.ericksprengel.marmitop.ui.orderday.OrderDayActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
 public class OrdersFragment extends AuthenticatedFragment implements OrdersAdapter.OnOrderDayClickListener {
@@ -80,7 +63,7 @@ public class OrdersFragment extends AuthenticatedFragment implements OrdersAdapt
     }
 
     @Override
-    public void onSignedOutCleanup(FirebaseUser user) {
+    public void onSignedOutCleanup() {
         mOrdersAdapter.clear();
         detachDatabaseReadListener();
     }
@@ -94,7 +77,6 @@ public class OrdersFragment extends AuthenticatedFragment implements OrdersAdapt
 
     @Override
     public void onOrderDayClick(OrderDay orderDay) {
-        Toast.makeText(getContext(), "Exibir order day!\n" + orderDay.getMenuId(), Toast.LENGTH_SHORT).show();
         startActivity(OrderDayActivity.getStartIntent(getContext(), orderDay));
     }
 
@@ -109,6 +91,7 @@ public class OrdersFragment extends AuthenticatedFragment implements OrdersAdapt
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     OrderDay orderDay = dataSnapshot.getValue(OrderDay.class);
+                    assert orderDay != null;
                     orderDay.setMenuId(dataSnapshot.getKey());
                     mOrdersAdapter.add(orderDay);
                 }

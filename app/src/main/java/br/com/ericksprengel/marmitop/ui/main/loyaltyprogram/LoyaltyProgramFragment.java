@@ -3,12 +3,10 @@ package br.com.ericksprengel.marmitop.ui.main.loyaltyprogram;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -18,12 +16,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import br.com.ericksprengel.marmitop.R;
-import br.com.ericksprengel.marmitop.data.OrderDay;
 import br.com.ericksprengel.marmitop.ui.AuthenticatedFragment;
 import br.com.ericksprengel.marmitop.ui.loyaltycodereader.LoyaltyCodeReaderActivity;
-import br.com.ericksprengel.marmitop.ui.main.orders.OrdersAdapter;
-import br.com.ericksprengel.marmitop.ui.main.orders.OrdersFragment;
-import br.com.ericksprengel.marmitop.ui.orderday.OrderDayActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -68,7 +62,7 @@ public class LoyaltyProgramFragment extends AuthenticatedFragment {
     }
 
     @Override
-    public void onSignedOutCleanup(FirebaseUser user) {
+    public void onSignedOutCleanup() {
         mLoyaltyProgramPointsAdapter.clear();
         detachDatabaseReadListener();
     }

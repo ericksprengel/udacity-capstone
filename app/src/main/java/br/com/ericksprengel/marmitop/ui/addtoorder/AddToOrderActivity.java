@@ -66,7 +66,7 @@ public class AddToOrderActivity extends AuthenticatedActivity implements Options
         ButterKnife.bind(this);
 
         String mtopMenuItem = getIntent().getStringExtra(EXTRA_MTOP_MENU_ITEM_KEY);
-        Log.d(LOG_TAG, "Openning AddToOrderActivity for item: " + mtopMenuItem);
+        Log.d(LOG_TAG, "Opening AddToOrderActivity for item: " + mtopMenuItem);
 
         // Firebase init
         // - Auth
@@ -76,6 +76,7 @@ public class AddToOrderActivity extends AuthenticatedActivity implements Options
         mMenuItemDatabaseReference = mFirebaseDatabase.getReference("menus")
                 .child(MenuUtils.getMenuOfTheDay())
                 .child(mtopMenuItem);
+        assert user != null;
         mUserOrdersDatabaseReference = mFirebaseDatabase.getReference("user_orders")
                 .child(user.getUid())
                 .child(MenuUtils.getMenuOfTheDay())
@@ -111,7 +112,7 @@ public class AddToOrderActivity extends AuthenticatedActivity implements Options
     }
 
     @Override
-    public void onSignedOutCleanup(FirebaseUser user) {
+    public void onSignedOutCleanup() {
         detachDatabaseReadListener();
     }
 
@@ -146,8 +147,8 @@ public class AddToOrderActivity extends AuthenticatedActivity implements Options
         mDescription.setText(mMtopMenuItem.getDescription());
 
         List<Pair<String, MtopMenuItem.Option>> options = new ArrayList<>();
-        for(Map.Entry entry : mMtopMenuItem.getOptions().entrySet()) {
-            Pair pair = new Pair(entry.getKey(), entry.getValue());
+        for(Map.Entry<String, MtopMenuItem.Option> entry : mMtopMenuItem.getOptions().entrySet()) {
+            Pair<String, MtopMenuItem.Option> pair = new Pair<>(entry.getKey(), entry.getValue());
             options.add(pair);
         }
         mOptionsAdapter.setOptions(options);
