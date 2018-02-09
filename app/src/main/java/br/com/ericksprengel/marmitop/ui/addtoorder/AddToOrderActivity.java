@@ -79,7 +79,8 @@ public class AddToOrderActivity extends AuthenticatedActivity implements Options
         assert user != null;
         mUserOrdersDatabaseReference = mFirebaseDatabase.getReference("user_orders")
                 .child(user.getUid())
-                .child(MenuUtils.getMenuOfTheDay())
+//                .child("2018-02-08")              //TOTEST: it's to create orders in other days.
+                .child(MenuUtils.getMenuOfTheDay()) // <- comment this line to test
                 .child("orders");
 
         mOptionsAdapter = new OptionsAdapter(this);

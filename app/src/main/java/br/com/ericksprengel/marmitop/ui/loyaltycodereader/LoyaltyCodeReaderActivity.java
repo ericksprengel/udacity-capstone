@@ -87,7 +87,8 @@ public class LoyaltyCodeReaderActivity extends AppCompatActivity {
         assert user != null;
         mMenuItemDatabaseReference = mFirebaseDatabase.getReference("loyalty_points")
                 .child(user.getUid())
-                .child(MenuUtils.getMenuOfTheDay());
+//                .child("2018-02-08") //TOTEST: it's to create loyalty points in other days.
+                .child(MenuUtils.getMenuOfTheDay()); // <- comment this line to test
 
         Log.d(LOG_TAG, "onCreate");
     }

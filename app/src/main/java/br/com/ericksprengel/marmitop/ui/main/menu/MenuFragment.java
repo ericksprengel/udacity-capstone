@@ -171,7 +171,7 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnMtopMenuItem
             Calendar now = Calendar.getInstance();
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 
-            // for debug warning popup for holidays.
+            //TOTEST: for debug warning popup for holidays.
 //            try {
 //                now.setTime(sdf.parse("12/02/2018"));
 //            } catch (ParseException e) {
