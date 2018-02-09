@@ -1,13 +1,17 @@
 <resources>
+
+    <string translatable="false" name="holidays_api_base_url">http://www.calendario.com.br/</string>
+
+    <!-- Titles -->
     <string name="app_name">Marmitop</string>
     <string name="title_menu">Cardápio</string>
     <string name="title_orders">Pedidos</string>
     <string name="title_loyalty_program">Fidelidade</string>
 
+    <!-- MenuWidget -->
     <string name="appwidget_text">Cardápio do Dia</string>
     <string name="menu_wd_menu_name">Cardápio - %s</string>
 
-    <string translatable="false" name="holidays_api_base_url">http://www.calendario.com.br/</string>
 
     <!-- LoyaltyCodeReaderActivity -->
     <string name="loyalty_code_reader_ac_invalid_code_title">Código inválido.</string>
@@ -23,4 +27,24 @@
     <string name="order_day_ac_item_quantity_zero_alert">Selecione \'%1$s\' para remover este item da lista.</string>
     <string name="order_day_ac_save_button">Salvar Alterações</string>
     <string name="order_day_ac_title">Pedido (%1$s)</string>
+
+    <!-- QuantityView -->
+    <string name="quantity_vw_quantity_add_content_description">Adicionar item ao pedido</string>
+    <string name="quantity_vw_quantity">1</string>
+    <string name="quantity_vw_quantity_remove_content_description">Remover item do pedido</string>
+
+    <!-- OrdersFragment -->
+    <string name="orders_fg_more_items">Mais items…</string>
+
+    <!-- AddToOrderActivity -->
+    <string name="add_to_order_ac_description_label">Description:</string>
+    <string name="add_to_order_ac_quantity_label">Quantity:</string>
+    <string name="add_to_order_ac_options_label">Options:</string>
+    <string name="add_to_order_ac_add_to_order_button">Adicionar ao pedido</string>
+
+    <!-- LoyaltyProgramFragment -->
+    <string name="loyalty_program_fg_read_code_content_description">Ler QR Code</string>
+
+    <!-- MainActivity -->
+    <string name="action_signout">Sair</string>
 </resources>

@@ -7,6 +7,8 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -145,6 +147,24 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_signout:
+                signout();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     // FIREBASE AUTH
 
     private static final int RC_SIGN_IN = 123;
@@ -152,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
 
-    public void authenticate() {
+    void authenticate() {
         mFirebaseAuth = FirebaseAuth.getInstance();
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -177,6 +197,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
+    }
+
+    private void signout() {
+        mFirebaseAuth.signOut();
     }
 
     @Override

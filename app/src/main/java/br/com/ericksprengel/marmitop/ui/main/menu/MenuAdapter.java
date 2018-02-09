@@ -2,6 +2,7 @@ package br.com.ericksprengel.marmitop.ui.main.menu;
 
 
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ public class MenuAdapter  extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         void updateData(MtopMenuItem item) {
             mMtopMenuItem = item;
             mName.setText(mMtopMenuItem.getName());
-            mDescription.setText(mMtopMenuItem.getDescription());
+            mDescription.setText(Html.fromHtml(mMtopMenuItem.getDescription()));
 //            Picasso.with(mImage.getContext())
 //                    .load(mMtopMenuItem.getImage())
 //                    .placeholder(R.drawable.mtopMenuItem_poster_thumbnail_placeholder)

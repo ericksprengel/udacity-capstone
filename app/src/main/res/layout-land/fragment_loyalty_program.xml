@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,25 +8,27 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/loyalty_program_fg_recyclerview"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="@dimen/margin_xlarge"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/loyalty_program_fg_read_code"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         app:layoutManager="android.support.v7.widget.GridLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/loyalty_program_fg_read_code"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:spanCount="4"
         tools:listitem="@layout/fragment_loyalty_program_item" />
 
     <ImageButton
         android:id="@+id/loyalty_program_fg_read_code"
+        style="@style/AppTheme.Button.Borderless.Colored"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/qrcode_scanner"
-        android:scaleType="fitCenter"
+        android:layout_marginTop="8dp"
         android:contentDescription="@string/loyalty_program_fg_read_code_content_description"
-        style="@style/AppTheme.Button.Borderless.Colored"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/qrcode_scanner"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

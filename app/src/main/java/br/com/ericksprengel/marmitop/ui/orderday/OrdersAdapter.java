@@ -2,6 +2,7 @@ package br.com.ericksprengel.marmitop.ui.orderday;
 
 
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +50,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
             mOrderKey = orderKey;
             mOrder = order;
             mMenuItemName.setText(String.format("%s (%s)", mOrder.getMenuItem().getName(), mOrder.getOption().getName()));
-            mMenuItemDescription.setText(mOrder.getMenuItem().getDescription());
+            mMenuItemDescription.setText(Html.fromHtml(mOrder.getMenuItem().getDescription()));
             mQuantity.setQuantity(mOrder.getQuantity());
             mPrice.setText(NumberFormat.getCurrencyInstance(LOCALE_PT_BR).format(mOrder.getOption().getPrice()));
         }

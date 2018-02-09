@@ -4,9 +4,11 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://C:\Users\erick.sprengel.LGE\StudioProjects\udacity-capstone\app\app.iml" filepath="C:\Users\erick.sprengel.LGE\StudioProjects\udacity-capstone\app\app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/appadmin/appadmin.iml" filepath="$PROJECT_DIR$/appadmin/appadmin.iml" />
       <module fileurl="file://$PROJECT_DIR$/appadmin/marmitopadmin.iml" filepath="$PROJECT_DIR$/appadmin/marmitopadmin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/udacity-capstone.iml" filepath="$PROJECT_DIR$/.idea/udacity-capstone.iml" />
+      <module fileurl="file://$PROJECT_DIR$/udacity-capstone.iml" filepath="$PROJECT_DIR$/udacity-capstone.iml" />
       <module fileurl="file://C:\Users\erick.sprengel.LGE\StudioProjects\udacity-capstone\udacity-capstone.iml" filepath="C:\Users\erick.sprengel.LGE\StudioProjects\udacity-capstone\udacity-capstone.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/udacity-capstone.iml" filepath="$PROJECT_DIR$/.idea/udacity-capstone.iml" />
     </modules>
   </component>
 </project>
