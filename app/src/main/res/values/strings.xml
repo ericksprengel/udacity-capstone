@@ -15,12 +15,12 @@
 
     <!-- LoyaltyCodeReaderActivity -->
     <string name="loyalty_code_reader_ac_invalid_code_title">Código inválido.</string>
-    <string name="loyalty_code_reader_ac_invalid_code_message">O QRCode lido não é válido.\\nPor favor tente novamente ou peça ajuda ao atendente.</string>
+    <string name="loyalty_code_reader_ac_invalid_code_message">O QRCode lido não é válido.\nPor favor tente novamente ou peça ajuda ao atendente.</string>
     <string name="loyalty_code_reader_ac_invalid_code_positive_button">OK</string>
 
     <!-- MenuFragment -->
     <string name="menu_fg_holiday_dialog_title">Feriado!</string>
-    <string name="menu_fg_holiday_dialog_message">Hoje é \'%1$s\'.\\nVerifique se estamos operando.</string>
+    <string name="menu_fg_holiday_dialog_message">Hoje é \'%1$s\'.\nVerifique se estamos operando.</string>
     <string name="menu_fg_holiday_dialog_positive_button">OK</string>
 
     <!-- OrderDayActivity -->

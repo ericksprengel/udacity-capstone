@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -145,7 +146,7 @@ public class AddToOrderActivity extends AuthenticatedActivity implements Options
 
     private void updateView() {
         setTitle(mMtopMenuItem.getName());
-        mDescription.setText(mMtopMenuItem.getDescription());
+        mDescription.setText(Html.fromHtml(mMtopMenuItem.getDescription()));
 
         List<Pair<String, MtopMenuItem.Option>> options = new ArrayList<>();
         for(Map.Entry<String, MtopMenuItem.Option> entry : mMtopMenuItem.getOptions().entrySet()) {
