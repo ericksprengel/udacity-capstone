@@ -140,6 +140,7 @@ public class LoyaltyCodeReaderActivity extends AppCompatActivity {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d(LOG_TAG, "CAMERA permission granted.");
                     startReader();
                 } else {
                     finish();
@@ -153,7 +154,9 @@ public class LoyaltyCodeReaderActivity extends AppCompatActivity {
             return;
         }
         Log.d(LOG_TAG, "startReader: start!");
-        mSurfaceView.getHolder().addCallback(mSurfaceHolderCallback);
+        SurfaceHolder holder = mSurfaceView.getHolder();
+        holder.addCallback(mSurfaceHolderCallback);
+        startCapturing();
     }
 
     private void pauseReader() {
