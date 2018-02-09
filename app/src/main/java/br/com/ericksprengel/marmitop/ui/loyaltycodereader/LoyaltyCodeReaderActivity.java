@@ -49,6 +49,7 @@ public class LoyaltyCodeReaderActivity extends AppCompatActivity {
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference mMenuItemDatabaseReference;
 
+    private boolean mReading = true;
 
     private SurfaceHolder.Callback mSurfaceHolderCallback = new SurfaceHolder.Callback() {
 
@@ -67,7 +68,6 @@ public class LoyaltyCodeReaderActivity extends AppCompatActivity {
             stopCapturing();
         }
     };
-    private boolean mReading = true;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, LoyaltyCodeReaderActivity.class);
@@ -156,7 +156,6 @@ public class LoyaltyCodeReaderActivity extends AppCompatActivity {
         Log.d(LOG_TAG, "startReader: start!");
         SurfaceHolder holder = mSurfaceView.getHolder();
         holder.addCallback(mSurfaceHolderCallback);
-        startCapturing();
     }
 
     private void pauseReader() {
@@ -168,7 +167,11 @@ public class LoyaltyCodeReaderActivity extends AppCompatActivity {
 
     @SuppressLint("MissingPermission")
     private void startCapturing() {
-        Log.d(LOG_TAG, "startCapturing");
+        if(mCameraSource != null) {
+            Log.d(LOG_TAG, "startCapturing: already capturing.");
+            return;
+        }
+        Log.d(LOG_TAG, "startCapturing: start capturing.");
         final BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.QR_CODE).build();
         mCameraSource = new CameraSource.Builder(this, barcodeDetector)
                 .setAutoFocusEnabled(true)

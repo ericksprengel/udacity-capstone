@@ -1,5 +1,7 @@
 package br.com.ericksprengel.marmitop.ui.main;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -220,5 +224,29 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         }
+    }
+
+    /**
+     * Custom check for Google Play Services.
+     * It's different from GooglePlayServicesUtils.isGooglePlayServicesAvailable(Context context)
+     * @return true if it's available.
+     */
+    public boolean isGooglePlayServicesAvailable() {
+        GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
+        int status = googleApiAvailability.isGooglePlayServicesAvailable(this);
+        if(status != ConnectionResult.SUCCESS) {
+            if(googleApiAvailability.isUserResolvableError(status)) {
+                Dialog dialog = googleApiAvailability.getErrorDialog(this, status, 2404);
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                            @Override
+                            public void onDismiss(DialogInterface dialogInterface) {
+                                MainActivity.this.finish();
+                            }
+                        });
+                dialog.show();
+            }
+            return false;
+        }
+        return true;
     }
 }
