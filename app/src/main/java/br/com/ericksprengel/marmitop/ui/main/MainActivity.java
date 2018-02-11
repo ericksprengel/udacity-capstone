@@ -64,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        if (!isGooglePlayServicesAvailable()) {
+            return;
+        }
         // Firebase init
         mFirebaseAuth = FirebaseAuth.getInstance();
 
@@ -140,7 +143,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mFirebaseAuth.addAuthStateListener(mAuthStateListener);
+        if (mFirebaseAuth != null) {
+            mFirebaseAuth.addAuthStateListener(mAuthStateListener);
+        }
     }
 
     @Override
@@ -226,11 +231,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Custom check for Google Play Services.
-     * It's different from GooglePlayServicesUtils.isGooglePlayServicesAvailable(Context context)
-     * @return true if it's available.
-     */
     public boolean isGooglePlayServicesAvailable() {
         GoogleApiAvailability googleApiAvailability = GoogleApiAvailability.getInstance();
         int status = googleApiAvailability.isGooglePlayServicesAvailable(this);

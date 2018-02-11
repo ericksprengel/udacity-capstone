@@ -31,7 +31,6 @@ import br.com.ericksprengel.marmitop.data.Event;
 import br.com.ericksprengel.marmitop.data.Events;
 import br.com.ericksprengel.marmitop.data.MtopMenuItem;
 import br.com.ericksprengel.marmitop.ui.addtoorder.AddToOrderActivity;
-import br.com.ericksprengel.marmitop.utils.GooglePlayServicesUtils;
 import br.com.ericksprengel.marmitop.utils.MenuUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,9 +67,6 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnMtopMenuItem
         View rootView = inflater.inflate(R.layout.fragment_menu, container, false);
         ButterKnife.bind(this, rootView);
 
-        if (!GooglePlayServicesUtils.isGooglePlayServicesAvailable(getContext())) {
-            return rootView;
-        }
         // Firebase init
         // - Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
@@ -90,9 +86,7 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnMtopMenuItem
     @Override
     public void onResume() {
         super.onResume();
-        if (mFirebaseAuth != null) {
-            mFirebaseAuth.addAuthStateListener(mAuthStateListener);
-        }
+        mFirebaseAuth.addAuthStateListener(mAuthStateListener);
     }
 
     @Override
@@ -101,9 +95,7 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnMtopMenuItem
         if (mAuthStateListener != null) {
             mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
         }
-        if (mMenuAdapter != null) {
-            mMenuAdapter.clear();
-        }
+        mMenuAdapter.clear();
         detachDatabaseReadListener();
     }
 
@@ -167,7 +159,7 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnMtopMenuItem
     }
 
     private void detachDatabaseReadListener() {
-        if (mChildEventListener != null && mMenuDatabaseReference != null) {
+        if (mChildEventListener != null) {
             mMenuDatabaseReference.removeEventListener(mChildEventListener);
             mChildEventListener = null;
         }

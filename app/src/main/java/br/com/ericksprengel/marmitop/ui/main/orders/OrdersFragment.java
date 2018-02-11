@@ -19,7 +19,6 @@ import br.com.ericksprengel.marmitop.R;
 import br.com.ericksprengel.marmitop.data.OrderDay;
 import br.com.ericksprengel.marmitop.ui.AuthenticatedFragment;
 import br.com.ericksprengel.marmitop.ui.orderday.OrderDayActivity;
-import br.com.ericksprengel.marmitop.utils.GooglePlayServicesUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -47,10 +46,6 @@ public class OrdersFragment extends AuthenticatedFragment implements OrdersAdapt
         View rootView = inflater.inflate(R.layout.fragment_orders, container, false);
         ButterKnife.bind(this, rootView);
 
-        if (!GooglePlayServicesUtils.isGooglePlayServicesAvailable(getContext())) {
-            return rootView;
-        }
-
         // Firebase init
         // - Database
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -69,18 +64,14 @@ public class OrdersFragment extends AuthenticatedFragment implements OrdersAdapt
 
     @Override
     public void onSignedOutCleanup() {
-        if (mOrdersAdapter != null) {
-            mOrdersAdapter.clear();
-        }
+        mOrdersAdapter.clear();
         detachDatabaseReadListener();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        if (mOrdersAdapter != null) {
-            mOrdersAdapter.clear();
-        }
+        mOrdersAdapter.clear();
         detachDatabaseReadListener();
     }
 

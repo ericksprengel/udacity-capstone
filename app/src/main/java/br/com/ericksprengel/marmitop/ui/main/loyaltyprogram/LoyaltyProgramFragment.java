@@ -18,7 +18,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import br.com.ericksprengel.marmitop.R;
 import br.com.ericksprengel.marmitop.ui.AuthenticatedFragment;
 import br.com.ericksprengel.marmitop.ui.loyaltycodereader.LoyaltyCodeReaderActivity;
-import br.com.ericksprengel.marmitop.utils.GooglePlayServicesUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -46,10 +45,6 @@ public class LoyaltyProgramFragment extends AuthenticatedFragment {
         View rootView = inflater.inflate(R.layout.fragment_loyalty_program, container, false);
         ButterKnife.bind(this, rootView);
 
-        if (!GooglePlayServicesUtils.isGooglePlayServicesAvailable(getContext())) {
-            return rootView;
-        }
-
         // Firebase init
         // - Database
         mFirebaseDatabase = FirebaseDatabase.getInstance();
@@ -75,9 +70,7 @@ public class LoyaltyProgramFragment extends AuthenticatedFragment {
     @Override
     public void onPause() {
         super.onPause();
-        if(mLoyaltyProgramPointsAdapter != null) {
-            mLoyaltyProgramPointsAdapter.clear();
-        }
+        mLoyaltyProgramPointsAdapter.clear();
         detachDatabaseReadListener();
     }
 
