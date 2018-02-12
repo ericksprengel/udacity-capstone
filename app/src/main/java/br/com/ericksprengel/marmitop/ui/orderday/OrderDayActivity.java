@@ -23,7 +23,7 @@ import butterknife.OnClick;
 
 public class OrderDayActivity extends AuthenticatedActivity implements OrdersAdapter.OnOrderQuantityListener {
 
-    public static final String EXTRA_ORDER_DAY_KEY = "extra_order_day_key";
+    private static final String EXTRA_ORDER_DAY_KEY = "extra_order_day_key";
 
     // Views
     @BindView(R.id.order_day_ac_recyclerview) RecyclerView mRecyclerView;

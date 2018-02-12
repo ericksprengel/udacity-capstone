@@ -47,6 +47,7 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnMtopMenuItem
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference mMenuDatabaseReference;
     ChildEventListener mChildEventListener;
+    private String mMenuId;
 
     public MenuFragment() {}
 
@@ -67,13 +68,15 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnMtopMenuItem
         View rootView = inflater.inflate(R.layout.fragment_menu, container, false);
         ButterKnife.bind(this, rootView);
 
+        mMenuId = MenuUtils.getMenuOfTheDay();
+
         // Firebase init
         // - Auth
         mFirebaseAuth = FirebaseAuth.getInstance();
         // - Database
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mMenuDatabaseReference = mFirebaseDatabase.getReference("menus")
-                .child(MenuUtils.getMenuOfTheDay());
+                .child(mMenuId);
 
         // Menu list init
         mMenuAdapter = new MenuAdapter(this);
@@ -101,7 +104,7 @@ public class MenuFragment extends Fragment implements MenuAdapter.OnMtopMenuItem
 
     @Override
     public void onMtopMenuItemClick(MtopMenuItem mtopMenuItemtem) {
-        startActivity(AddToOrderActivity.getStartIntent(getContext(), mtopMenuItemtem));
+        startActivity(AddToOrderActivity.getStartIntent(getContext(), mMenuId, mtopMenuItemtem));
     }
 
 

@@ -36,7 +36,8 @@ public class AddToOrderActivity extends AuthenticatedActivity implements Options
 
     private static final String LOG_TAG = AddToOrderActivity.class.getName();
 
-    public static final String EXTRA_MTOP_MENU_ITEM_KEY = "mtop_menu_item_key";
+    private static final String EXTRA_MENU_ID_KEY = "menu_id_key";
+    private static final String EXTRA_MTOP_MENU_ITEM_KEY = "mtop_menu_item_key";
 
     public static final String STATE_OPTION = "state_option";
 
@@ -54,8 +55,9 @@ public class AddToOrderActivity extends AuthenticatedActivity implements Options
     private MtopMenuItem mMtopMenuItem;
     private OptionsAdapter mOptionsAdapter;
 
-    public static Intent getStartIntent(Context context, MtopMenuItem mtopMenuItemtem) {
+    public static Intent getStartIntent(Context context, String menuId, MtopMenuItem mtopMenuItemtem) {
         Intent intent = new Intent(context, AddToOrderActivity.class);
+        intent.putExtra(EXTRA_MENU_ID_KEY, menuId);
         intent.putExtra(EXTRA_MTOP_MENU_ITEM_KEY, mtopMenuItemtem.getKey());
         return intent;
     }
@@ -66,6 +68,7 @@ public class AddToOrderActivity extends AuthenticatedActivity implements Options
         setContentView(R.layout.activity_add_to_order);
         ButterKnife.bind(this);
 
+        String menuId = getIntent().getStringExtra(EXTRA_MENU_ID_KEY);
         String mtopMenuItem = getIntent().getStringExtra(EXTRA_MTOP_MENU_ITEM_KEY);
         Log.d(LOG_TAG, "Opening AddToOrderActivity for item: " + mtopMenuItem);
 
@@ -75,7 +78,7 @@ public class AddToOrderActivity extends AuthenticatedActivity implements Options
         // - Database
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mMenuItemDatabaseReference = mFirebaseDatabase.getReference("menus")
-                .child(MenuUtils.getMenuOfTheDay())
+                .child(menuId)
                 .child(mtopMenuItem);
         assert user != null;
         mUserOrdersDatabaseReference = mFirebaseDatabase.getReference("user_orders")
