@@ -49,7 +49,7 @@ public class LoyaltyCodeReaderActivity extends AppCompatActivity {
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference mMenuItemDatabaseReference;
 
-    private boolean mReading = true;
+    private boolean mReading = false;
 
     private SurfaceHolder.Callback mSurfaceHolderCallback = new SurfaceHolder.Callback() {
 
@@ -97,7 +97,7 @@ public class LoyaltyCodeReaderActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         requestPermissions();
-        startReader();
+        startReader(false);
     }
 
     @Override
@@ -141,7 +141,7 @@ public class LoyaltyCodeReaderActivity extends AppCompatActivity {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Log.d(LOG_TAG, "CAMERA permission granted.");
-                    startReader();
+                    startReader(true);
                 } else {
                     finish();
                 }
@@ -149,13 +149,21 @@ public class LoyaltyCodeReaderActivity extends AppCompatActivity {
         }
     }
 
-    private void startReader() {
+    private void startReader(boolean startCapturing) {
+        Log.d(LOG_TAG, "startReader");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
+        if(mReading) {
+            return;
+        }
+        mReading = true;
         Log.d(LOG_TAG, "startReader: start!");
         SurfaceHolder holder = mSurfaceView.getHolder();
         holder.addCallback(mSurfaceHolderCallback);
+        if(startCapturing) {
+            startCapturing();
+        }
     }
 
     private void pauseReader() {
