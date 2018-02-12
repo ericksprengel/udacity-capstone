@@ -47,7 +47,7 @@ public class OrdersAdapter extends RecyclerView.Adapter<OrdersAdapter.ViewHolder
             mOrderDay = orderDay;
             Order order = orderDay.getOrders().values().iterator().next();
             mMenu.setText(mOrderDay.getMenuId());
-            mDescriptionItem1.setText(order.getShortDescription());
+            mDescriptionItem1.setText(order.getShortDescription(mDescriptionItem1.getResources()));
             mDescriptionMore.setVisibility(orderDay.getOrders().size() > 1 ? View.VISIBLE : View.INVISIBLE);
             mTotal.setText(NumberFormat.getCurrencyInstance(LOCALE_PT_BR).format(mOrderDay.getTotalPrice()));
         }

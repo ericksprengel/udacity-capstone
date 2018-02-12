@@ -27,6 +27,7 @@
     <string name="order_day_ac_item_quantity_zero_alert">Selecione \'%1$s\' para remover este item da lista.</string>
     <string name="order_day_ac_save_button">Salvar Alterações</string>
     <string name="order_day_ac_title">Pedido (%1$s)</string>
+    <string name="action_delete_forever">Cancelar pedido</string>
 
     <!-- QuantityView -->
     <string name="quantity_vw_quantity_add_content_description">Adicionar item ao pedido</string>
@@ -44,7 +45,11 @@
 
     <!-- LoyaltyProgramFragment -->
     <string name="loyalty_program_fg_read_code_content_description">Ler QR Code</string>
+    <string name="loyalty_program_fg_done">Ponto de fidelidade já conquistado</string>
 
     <!-- MainActivity -->
     <string name="action_signout">Sair</string>
+
+    <!-- data Order -->
+    <string name="order_data_short_description">%s (%s)</string>
 </resources>

@@ -49,6 +49,7 @@ public class LoyaltyCodeReaderActivity extends AppCompatActivity {
     FirebaseDatabase mFirebaseDatabase;
     DatabaseReference mMenuItemDatabaseReference;
 
+    private boolean mReading = false;
 
     private SurfaceHolder.Callback mSurfaceHolderCallback = new SurfaceHolder.Callback() {
 
@@ -67,7 +68,6 @@ public class LoyaltyCodeReaderActivity extends AppCompatActivity {
             stopCapturing();
         }
     };
-    private boolean mReading = true;
 
     public static Intent getStartIntent(Context context) {
         return new Intent(context, LoyaltyCodeReaderActivity.class);
@@ -97,7 +97,7 @@ public class LoyaltyCodeReaderActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         requestPermissions();
-        startReader();
+        startReader(false);
     }
 
     @Override
@@ -140,7 +140,8 @@ public class LoyaltyCodeReaderActivity extends AppCompatActivity {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    startReader();
+                    Log.d(LOG_TAG, "CAMERA permission granted.");
+                    startReader(true);
                 } else {
                     finish();
                 }
@@ -148,12 +149,21 @@ public class LoyaltyCodeReaderActivity extends AppCompatActivity {
         }
     }
 
-    private void startReader() {
+    private void startReader(boolean startCapturing) {
+        Log.d(LOG_TAG, "startReader");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
+        if(mReading) {
+            return;
+        }
+        mReading = true;
         Log.d(LOG_TAG, "startReader: start!");
-        mSurfaceView.getHolder().addCallback(mSurfaceHolderCallback);
+        SurfaceHolder holder = mSurfaceView.getHolder();
+        holder.addCallback(mSurfaceHolderCallback);
+        if(startCapturing) {
+            startCapturing();
+        }
     }
 
     private void pauseReader() {
@@ -165,7 +175,11 @@ public class LoyaltyCodeReaderActivity extends AppCompatActivity {
 
     @SuppressLint("MissingPermission")
     private void startCapturing() {
-        Log.d(LOG_TAG, "startCapturing");
+        if(mCameraSource != null) {
+            Log.d(LOG_TAG, "startCapturing: already capturing.");
+            return;
+        }
+        Log.d(LOG_TAG, "startCapturing: start capturing.");
         final BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.QR_CODE).build();
         mCameraSource = new CameraSource.Builder(this, barcodeDetector)
                 .setAutoFocusEnabled(true)

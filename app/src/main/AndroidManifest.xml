@@ -21,10 +21,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.addtoorder.AddToOrderActivity" />
-        <activity android:name=".ui.orderday.OrderDayActivity" />
+        <activity android:name=".ui.addtoorder.AddToOrderActivity"
+            android:parentActivityName=".ui.main.MainActivity" />
+        <activity android:name=".ui.orderday.OrderDayActivity"
+            android:parentActivityName=".ui.main.MainActivity"/>
         <activity
             android:name=".ui.loyaltycodereader.LoyaltyCodeReaderActivity"
+            android:parentActivityName=".ui.main.MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <receiver android:name=".ui.widgets.menu.MenuWidget">

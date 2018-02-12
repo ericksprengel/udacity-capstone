@@ -5,6 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -23,7 +26,7 @@ import butterknife.OnClick;
 
 public class OrderDayActivity extends AuthenticatedActivity implements OrdersAdapter.OnOrderQuantityListener {
 
-    public static final String EXTRA_ORDER_DAY_KEY = "extra_order_day_key";
+    private static final String EXTRA_ORDER_DAY_KEY = "extra_order_day_key";
 
     // Views
     @BindView(R.id.order_day_ac_recyclerview) RecyclerView mRecyclerView;
@@ -60,6 +63,29 @@ public class OrderDayActivity extends AuthenticatedActivity implements OrdersAda
         mOrdersAdapter = new OrdersAdapter(this);
         mRecyclerView.setAdapter(mOrdersAdapter);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_orderday, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_delete_forever:
+                for (int i = 0; i < mOrdersAdapter.getItemCount(); i++) {
+                    String orderKey = mOrdersAdapter.getOrderKey(i);
+                    mOrdersDatabaseReference.child(orderKey).removeValue();
+                }
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     @Override
     protected void onSignedInInitialize(FirebaseUser user) {
         attachDatabaseReadListener(user);
