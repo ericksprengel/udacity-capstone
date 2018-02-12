@@ -10,7 +10,7 @@
         android:id="@+id/main_ac_menu_id_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="--//--"
+        tools:text="2018-02-12"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -20,7 +20,7 @@
         android:id="@+id/main_ac_create_menu_items_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Criar Itens"
+        android:text="@string/main_ac_create_menu_items"
         android:layout_margin="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="--//--"
+        tools:text="Erick M. Sprengel (12345)"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

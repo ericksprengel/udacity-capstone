@@ -52,8 +52,8 @@ public class MenuUtils {
         createMtopMenuItem("Panqueca de frango", "Arroz, feijão e escarola", options);
         createMtopMenuItem("Pernil ao Molho com Pimentão", "Arroz, feijão, batata  e farofa", options);
         createMtopMenuItem("Prato Vegetariano", "Arroz, feijão, tempura de legumes e chuchu refogado", options);
-        createMtopMenuItem("Prato Fitness", "<b>Carb:</b> Arroz integral ou Purê de batata com cenoura  \n" +
-                "<b>Proteina:</b> Carne moída \n" +
+        createMtopMenuItem("Prato Fitness", "<b>Carb:</b> Arroz integral ou Purê de batata com cenoura<br/>" +
+                "<b>Proteina:</b> Carne moída<br/>" +
                 "<b>Leguminoso:</b> Repolho refogada", options);
 
     }

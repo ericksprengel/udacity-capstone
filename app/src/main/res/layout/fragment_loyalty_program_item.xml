@@ -39,5 +39,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_done_white_24dp" />
+        app:srcCompat="@drawable/ic_done_white_24dp"
+        android:contentDescription="@string/loyalty_program_fg_done" />
 </android.support.constraint.ConstraintLayout>

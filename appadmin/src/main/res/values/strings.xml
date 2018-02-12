@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Marmitop Admin</string>
+    <string name="main_ac_create_menu_items">Criar Itens</string>
 </resources>

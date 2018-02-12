@@ -1,6 +1,10 @@
 package br.com.ericksprengel.marmitop.data;
 
 
+import android.content.res.Resources;
+
+import br.com.ericksprengel.marmitop.R;
+
 public class Order {
 
     private int quantity;
@@ -41,7 +45,7 @@ public class Order {
         this.menuItem = menuItem;
     }
 
-    public String getShortDescription() {
-        return String.format("%s (%s)", menuItem.getName(), option.getName());
+    public String getShortDescription(Resources res) {
+        return res.getString(R.string.order_data_short_description, menuItem.getName(), option.getName());
     }
 }

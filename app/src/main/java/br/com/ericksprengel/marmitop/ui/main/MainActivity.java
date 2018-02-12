@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         if (!isGooglePlayServicesAvailable()) {
             return;
         }
+
         // Firebase init
         mFirebaseAuth = FirebaseAuth.getInstance();
 

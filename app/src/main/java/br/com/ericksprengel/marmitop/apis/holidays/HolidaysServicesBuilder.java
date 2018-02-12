@@ -1,6 +1,7 @@
 package br.com.ericksprengel.marmitop.apis.holidays;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.readystatesoftware.chuck.ChuckInterceptor;
 
@@ -21,7 +22,7 @@ import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 
 class HolidaysServicesBuilder {
 
-    // It's a temporary key. It'll expire soon.
+    // It's a temporary key. It'll expire after Udacity final review.
     private static final String API_KEY = "ZXJpY2suc3ByZW5nZWxAZ21haWwuY29tJmhhc2g9MTc3Mjk5MzIz";
 
     private static Retrofit mRetrofit;
@@ -33,7 +34,7 @@ class HolidaysServicesBuilder {
         // adding api key to query
         httpClient.addInterceptor(new Interceptor() {
                       @Override
-                      public Response intercept(Chain chain) throws IOException {
+                      public Response intercept(@NonNull Chain chain) throws IOException {
                           Request originalRequest = chain.request();
                           HttpUrl url = originalRequest.url().newBuilder()
                                   .addQueryParameter("token", API_KEY)
